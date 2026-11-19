@@ -20,6 +20,8 @@ jobs:
    - uses: astral-sh/setup-uv@v5
    - name: Ruff
      run: uvx ruff check src/
+   - name: Tests
+     run: uv run pytest -v
    - name: Smoke test
      run: PYTHONPATH=src python3 -m healthreport
      
