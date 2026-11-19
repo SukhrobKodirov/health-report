@@ -51,6 +51,7 @@ def run_check(path: Path) -> tuple[list[Result], list[Failure]]:
             [str(path)],
             capture_output=True,
             text=True,
+            check=False,
             timeout=TIMEOUT_SECONDS,
         )
     except subprocess.TimeoutExpired:
