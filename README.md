@@ -44,3 +44,28 @@ Exit code is `o` if every check ran, `1` if any failed. A failed check is report
 - [ ] v0.2: Telegram bot
 - [ ] v0.3 thresholds from TOML config
 - [ ] v0.4 SQLite state and alert state machine
+
+## Install on a server
+
+Requires Ubuntu 22.04+ with Python 3.10+ and systemd.
+
+1. Create the secrets file (only root can read it):
+    ```bash
+    sudo install -d -m 700 /etc/health-report
+    sudo nano /etc/health-report/telegram.env
+    ```
+    ```
+    HR_TELEGRAM_TOKEN=...
+    HR_TELEGRAM_CHAT_ID=...
+    ```
+2. Install or update:
+    ```bash
+    sudo ./install.sh
+    ```
+3. Test one run and read its log:
+    ```bash
+    sudo systemctl start health-report.service
+    journalctl -u health-report.service -n 30
+    ```
+
+The timer runs the report every 4 hours. The service runs as the unprivilaged `healthreport` user with a read-only filesystem.
