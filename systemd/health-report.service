@@ -1,0 +1,20 @@
+[Unit]
+Description=Health Report: run checks and send Report
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=healthreport
+Group=healthreport
+EnvironmentFile=/etc/health-report/telegram.env
+Environment=PYTHONPATH=/opt/health-report/src 
+Environment=PYTHONDONTWRITEBYTECODE=1
+WorkingDirectory=/opt/health-report
+ExecStart=/usr/bin/python3 -m healthreport --send
+TimeoutStartSec=120
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
